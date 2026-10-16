@@ -1,0 +1,22 @@
+{
+  "key": "BTCIRT_4h_lstm_27189de3",
+  "symbol": "BTCIRT",
+  "timeframe": "4h",
+  "features": [
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "returns",
+    "rsi",
+    "macd",
+    "macd_signal",
+    "bb_width"
+  ],
+  "lookback": 100,
+  "future_steps": 5,
+  "trainings": 1,
+  "last_val_acc": 0.36633663366336633,
+  "last_loss": 0.6267036199569702
+}

@@ -1,0 +1,27 @@
+# Secrets
+.env
+*.key
+
+# Runtime artifacts
+*.log
+bot_status.json
+market_data/*.csv
+market_data/*.pkl
+market_data/*.json
+market_data/*.h5
+models/*.pt
+models/*.onnx
+models/*.ckpt
+mlruns/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Editors
+.vscode/
+.idea/

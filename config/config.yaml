@@ -1,0 +1,207 @@
+app:
+  name: webtraderbot
+  environment: development
+  data_dir: market_data
+  model_dir: models
+  log_level: INFO
+  log_dir: logs
+active_exchange: nobitex
+exchanges:
+  nobitex:
+    adapter: nobitex
+    name: Nobitex
+    base_url: https://apiv2.nobitex.ir
+    api_key: ${NOBITEX_API_KEY}
+    base_currency: IRT
+    testnet: false
+    timeout_seconds: 15
+    breaker_fail_max: 5
+    breaker_reset_timeout: 60
+    symbols:
+    - BTCIRT
+    - ETHIRT
+    - USDTIRT
+    - DOGEIRT
+    - XRPIRT
+    - LTCIRT
+    - BCHIRT
+    - BNBIRT
+    - ADAIRT
+    - DOTIRT
+    - SOLIRT
+    - TRXIRT
+    - AAVEIRT
+    - UNIIRT
+    - LINKIRT
+    - BTCUSDT
+    - ETHUSDT
+    - DOGEUSDT
+    - XRPUSDT
+    - LTCUSDT
+    - BCHUSDT
+    - BNBUSDT
+    - ADAUSDT
+    - DOTUSDT
+    - SOLUSDT
+    - TRXUSDT
+  binance:
+    adapter: ccxt
+    name: Binance
+    api_key: ${BINANCE_API_KEY}
+    api_secret: ${BINANCE_API_SECRET}
+    base_currency: USDT
+    testnet: true
+    symbols:
+    - BTCUSDT
+    - ETHUSDT
+    - BNBUSDT
+    - XRPUSDT
+    - ADAUSDT
+    - SOLUSDT
+    - DOGEUSDT
+    - DOTUSDT
+    - TRXUSDT
+    - AVAXUSDT
+    - UNIUSDT
+    - ATOMUSDT
+    - LINKUSDT
+    - ETCUSDT
+    - XLMUSDT
+    - BCHUSDT
+    - LTCUSDT
+    - NEARUSDT
+  bybit:
+    adapter: ccxt
+    name: Bybit
+    api_key: ${BYBIT_API_KEY}
+    api_secret: ${BYBIT_API_SECRET}
+    base_currency: USDT
+    testnet: true
+    symbols:
+    - BTCUSDT
+    - ETHUSDT
+    - SOLUSDT
+    - XRPUSDT
+    - ADAUSDT
+    - DOGEUSDT
+    - LTCUSDT
+    - LINKUSDT
+    - AVAXUSDT
+    - DOTUSDT
+  wallex:
+    adapter: wallex
+    name: Wallex
+    base_url: https://api.wallex.ir
+    api_key: ${WALLEX_API_KEY}
+    base_currency: TOMAN
+    testnet: false
+    symbols:
+    - BTCIRT
+    - ETHIRT
+    - USDTIRT
+    - DOGEIRT
+    - XRPIRT
+    - LTCIRT
+    - ADAIRT
+    - SOLIRT
+    - TRXIRT
+    - BTCUSDT
+    - ETHUSDT
+    - DOGEUSDT
+trading:
+  symbol: BTCIRT
+  timeframe: 4h
+  initial_balance: 20.0
+  live_trading: false
+  loop_interval_seconds: 60
+  fetch_limit: 1000
+execution:
+  fee_pct: 0.001
+  slippage_pct: 0.0005
+  trailing_stop_pct: null
+  allow_short: true
+  order_type: market
+indicators:
+  rsi_period: 14
+  macd_fast: 12
+  macd_slow: 26
+  macd_signal: 9
+  bb_period: 20
+  bb_std: 2.0
+risk:
+  stop_loss_pct: 0.02
+  take_profit_pct: 0.04
+  position_size_pct: 0.95
+  max_daily_loss: 10.0
+  max_consecutive_losses: 3
+  profit_target: 50.0
+  max_position_notional: null
+ai:
+  model_type: lstm
+  lookback: 100
+  future_steps: 5
+  features:
+  - open
+  - high
+  - low
+  - close
+  - volume
+  - returns
+  - rsi
+  - macd
+  - macd_signal
+  - bb_width
+  hidden_units:
+  - 128
+  - 64
+  dropout: 0.3
+  lr: 0.001
+  epochs: 20
+  batch_size: 32
+  min_training_samples: 500
+  retrain_interval: 100
+  online_learning: true
+  online_batch_size: 200
+  online_epochs: 5
+  seed: 42
+  prefer_onnx: true
+  test_ratio: 0.2
+signals:
+  ai_weight: 5
+  wave_weight: 1
+  orderbook_weight: 1
+  prob_buy_threshold: 0.05
+  prob_sell_threshold: 0.9
+  rsi_overbought: 70
+  rsi_oversold: 30
+  bb_width_max: 0.03
+  max_spread_pct: 0.005
+  spoof_ratio_threshold: 0.7
+  imbalance_threshold: 0.3
+data:
+  max_data_points: 10000
+  order_book_depth: 10
+  use_order_book_features: true
+  save_orderbook_snapshots: false
+  symbol_validation_ttl: 3600
+  warmup_pad: 10
+  save_csv_snapshot: true
+database:
+  timescale_dsn: postgresql://wtb:${POSTGRES_PASSWORD}@localhost:5432/wtb_ts
+  app_dsn: postgresql://wtb:${POSTGRES_PASSWORD}@localhost:5432/wtb_app
+  redis_url: redis://localhost:6379/0
+api:
+  host: 127.0.0.1
+  port: 8000
+  cors_origins: []
+notifications:
+  enable: true
+  telegram_bot_token: ${TELEGRAM_BOT_TOKEN}
+  telegram_chat_id: ${TELEGRAM_CHAT_ID}
+  notify_on_open: true
+  notify_on_close: true
+  notify_on_sl_tp: true
+  notify_on_risk_halt: true
+mlflow:
+  tracking_uri: sqlite:///mlflow.db
+  experiment: webtraderbot

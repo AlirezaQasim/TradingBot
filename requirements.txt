@@ -1,0 +1,55 @@
+# WebTraderBot v0.1.0 — production stack (system Python 3.13, no venv)
+#
+# aarch64 / Raspberry Pi note:
+#   pip's default torch wheel on Linux arm64 pulls CUDA 13 extras (~3 GB, useless
+#   on a Pi). Install the CPU build instead:
+#     pip install torch --index-url https://download.pytorch.org/whl/cpu
+#
+# Core async
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.9
+pydantic-settings>=2.5
+aiohttp>=3.10
+
+# Data
+polars>=1.0
+numpy>=2.0
+ccxt>=4.5
+
+# Databases
+asyncpg>=0.29
+sqlalchemy[asyncio]>=2.0
+redis>=5.0
+
+# Fault tolerance
+tenacity>=9.0
+pybreaker>=1.4
+tornado>=6.4          # pybreaker async support
+structlog>=24.0
+
+# ML
+torch>=2.5            # see CPU index note above
+scikit-learn>=1.5
+joblib>=1.4
+optuna>=4.0
+onnx>=1.17
+onnxruntime>=1.19
+
+# MLOps
+mlflow>=2.17
+celery>=5.4
+
+# UI / config
+streamlit>=1.40
+streamlit-autorefresh>=1.0
+pyyaml>=6.0
+python-dotenv>=1.0
+httpx>=0.27
+
+# Notifications
+aiogram>=3.13
+
+# Dev / test
+pytest>=8.3
+pytest-asyncio>=0.24
